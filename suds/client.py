@@ -645,7 +645,11 @@ class SoapClient:
             if e.httpcode in (202,204):
                 result = None
             else:
-                log.error(self.last_sent())
+                log.error('TransportError when sending message', exc_info=True, extra={
+                    'data': {
+                        'message': self.last_sent()
+                    }
+                })
                 result = self.failed(binding, e)
         return result
     
